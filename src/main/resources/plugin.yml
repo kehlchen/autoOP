@@ -1,0 +1,4 @@
+name: PaperLib
+version: 1.0.0
+main: info.plugin.minecraft.paperlib.PaperLib
+api-version: '26.2'
