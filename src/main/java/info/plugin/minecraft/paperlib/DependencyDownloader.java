@@ -1,4 +1,4 @@
-package de.example.yourplugin;
+package info.plugin.minecraft.paperlib;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
